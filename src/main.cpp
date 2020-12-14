@@ -34,29 +34,6 @@ int min_dist_angle = 30;
 boolean scan = false;
 boolean point = false;
 
-void setup()
-{
-  //set pins as outputs
-  pinMode(SER, OUTPUT);
-  pinMode(LATCH, OUTPUT);
-  pinMode(CLK, OUTPUT);
-
-  //zero out displays
-  digitalWrite(LATCH, LOW);
-  shiftOut(SER, CLK, MSBFIRST, B00000000);
-  digitalWrite(LATCH, HIGH);
-
-  myServo.attach(SERVO);
-  pinMode(BUTTON, INPUT);
-  pinMode(SENS, INPUT);
-  Serial.begin(9600);
-  delay(1000); //wait for LCD to be ready
-  lcdClear();
-  lcdString(128, "Arduino - Locate"); //line 1 starts at memory location 128
-  lcdString(192, "Closest Object:");  //line 2 starts at location 192
-  delay(3000);
-}
-
 /**********************************************
  * LCD Library for driving the Scott Edwards  *
  * Serial LCD Backpack.                       *
@@ -87,6 +64,33 @@ void lcdInt(int pos, int val)
   Serial.write(pos); //position cursor
   Serial.print(val);
   delay(100);
+}
+
+//
+// Arduino setup() and loop()
+//
+
+void setup()
+{
+  //set pins as outputs
+  pinMode(SER, OUTPUT);
+  pinMode(LATCH, OUTPUT);
+  pinMode(CLK, OUTPUT);
+
+  //zero out displays
+  digitalWrite(LATCH, LOW);
+  shiftOut(SER, CLK, MSBFIRST, B00000000);
+  digitalWrite(LATCH, HIGH);
+
+  myServo.attach(SERVO);
+  pinMode(BUTTON, INPUT);
+  pinMode(SENS, INPUT);
+  Serial.begin(9600);
+  delay(1000); //wait for LCD to be ready
+  lcdClear();
+  lcdString(128, "Arduino - Locate"); //line 1 starts at memory location 128
+  lcdString(192, "Closest Object:");  //line 2 starts at location 192
+  delay(3000);
 }
 
 void loop()
